@@ -3,7 +3,7 @@ import React from 'react';
 import ProductCard from './ProductCard';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { useToast } from '@/hooks/use-toast';
+import { useCart } from '@/contexts/CartContext';
 
 // Sample products data (would normally come from API)
 const featuredProducts = [
@@ -42,13 +42,10 @@ const featuredProducts = [
 ];
 
 const FeaturedProducts = () => {
-  const { toast } = useToast();
+  const { addItem } = useCart();
   
-  const handleAddToCart = (productName: string) => {
-    toast({
-      title: "Añadido al carrito",
-      description: `${productName} ha sido añadido a tu carrito`,
-    });
+  const handleAddToCart = (product) => {
+    addItem(product);
   };
 
   return (
@@ -78,7 +75,7 @@ const FeaturedProducts = () => {
               image={product.image}
               category={product.category}
               isNew={product.isNew}
-              onAddToCart={() => handleAddToCart(product.name)}
+              onAddToCart={() => handleAddToCart(product)}
             />
           ))}
         </div>
